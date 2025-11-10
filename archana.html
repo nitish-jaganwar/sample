@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Archana Coin & Hearts</title>
+<style>
+:root{
+  --bg: linear-gradient(180deg,#0f1724,#0b1220);
+  --accent: #ff5c8a;
+  --gold-shadow: rgba(196,138,12,0.18);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:#e6eef8;overflow:hidden}
+.page{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:18px;
+}
+.scene{
+  position:relative;width:360px;height:360px;
+  display:flex;align-items:center;justify-content:center;
+}
+.coin{
+  width:300px;height:300px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 12px 30px var(--gold-shadow),inset 0 -6px 18px rgba(0,0,0,0.25);
+  cursor:pointer;transition:transform .26s ease;
+}
+.coin:active{transform:scale(0.98)}
+.coin-svg{width:100%;height:100%;filter:drop-shadow(0 6px 10px rgba(0,0,0,0.35))}
+.engrave{
+  font-family:"Palatino Linotype","Georgia",serif;
+  font-size:44px;fill:rgba(20,20,20,0.12);
+  stroke:rgba(0,0,0,0.07);stroke-width:1.5;paint-order:stroke;
+  letter-spacing:2px;text-transform:capitalize;
+}
+.mini-hearts path{fill:var(--accent);opacity:0.85;transform-origin:center;transition:transform .4s ease;}
+.hearts-layer{
+  position:absolute;inset:0;pointer-events:none;overflow:hidden;
+}
+.heart{
+  position:absolute;width:34px;height:34px;transform-origin:center;will-change:transform,opacity;user-select:none;
+}
+.heart svg{width:100%;height:100%;display:block}
+.controls{display:flex;gap:12px;flex-direction:column;align-items:center;justify-content:center;}
+.controls button{
+  border:0;background:linear-gradient(180deg,#ff89ab,#ff5c8a);
+  color:white;padding:10px 16px;border-radius:8px;font-weight:600;cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+}
+.controls .hint{font-size:13px;opacity:0.82;color:#d7e9ff;}
+@media(max-width:420px){
+  .scene{width:300px;height:300px}
+  .coin{width:260px;height:260px}
+  .engrave{font-size:34px}
+  .heart{width:28px;height:28px}
+}
+</style>
+</head>
+<body>
+<main class="page">
+  <div class="scene">
+    <div class="coin" id="coin" title="Archana's Coin">
+      <svg viewBox="0 0 300 300" class="coin-svg">
+        <defs>
+          <radialGradient id="g1" cx="40%" cy="30%">
+            <stop offset="0%" stop-color="#ffd86b"/>
+            <stop offset="60%" stop-color="#f4b400"/>
+            <stop offset="100%" stop-color="#c68700"/>
+          </radialGradient>
+        </defs>
+        <circle cx="150" cy="150" r="125" fill="url(#g1)" stroke="#b57f00" stroke-width="6"/>
+        <circle cx="150" cy="150" r="100" fill="#ffd" opacity="0.06"/>
+        <text x="150" y="165" text-anchor="middle" class="engrave">Archana</text>
+        <g class="mini-hearts" transform="translate(150,80)">
+          <path d="M-10,10 C-25,-10 10,-35 10,-10 C10,-35 35,-10 20,10 C5,30 -5,28 -10,10" />
+          <path d="M40,10 C25,-10 60,-35 60,-10 C60,-35 85,-10 70,10 C55,30 45,28 40,10" transform="scale(0.6) translate(-40,0)"/>
+        </g>
+      </svg>
+    </div>
+    <div id="hearts" class="hearts-layer"></div>
+  </div>
+  <section class="controls">
+    <button id="toggle-btn">Toggle Hearts</button>
+    <button id="burst-btn">Heart Burst</button>
+    <p class="hint">Click the coin too — it toggles hearts.</p>
+  </section>
+</main>
+<script>
+const heartsLayer=document.getElementById('hearts');
+const coin=document.getElementById('coin');
+const toggleBtn=document.getElementById('toggle-btn');
+const burstBtn=document.getElementById('burst-btn');
+let running=true,spawnInterval=null;
+
+function heartElement(){
+  const e=document.createElement('div');
+  e.className='heart';
+  e.innerHTML='<svg viewBox="0 0 32 29"><path d="M23.6 2.6c-2.9 0-4.8 2.4-4.8 2.4s-1.9-2.4-4.8-2.4C8 2.6 4.5 6.2 4.5 10.9c0 9.2 11 12.8 11 15.1 0-2.3 11-5.9 11-15.1 0-4.7-3.6-8.3-3.9-8.3z" fill="#ff5c8a"/></svg>';
+  return e;
+}
+function spawnHeart(burst=false){
+  const rect=heartsLayer.getBoundingClientRect();
+  const startX=rect.width/2+(Math.random()-0.5)*rect.width*0.4;
+  const startY=rect.height*0.65+(Math.random()-0.2)*20;
+  const el=heartElement();
+  el.style.left=(startX-16)+'px';
+  el.style.top=(startY-16)+'px';
+  heartsLayer.appendChild(el);
+  const driftX=(Math.random()-0.5)*140;
+  const rise=-(180+Math.random()*120);
+  const duration=burst?900+Math.random()*500:2200+Math.random()*1600;
+  const anim=el.animate([
+    {transform:`translateY(0) scale(${0.8+Math.random()*0.6})`,opacity:0},
+    {transform:`translate(${driftX}px,${rise*0.45}px) scale(1.05)`,opacity:1,offset:0.18},
+    {transform:`translate(${driftX*1.2}px,${rise}px) scale(0.85)`,opacity:0}
+  ],{duration,easing:'cubic-bezier(.15,.6,.25,1)',fill:'forwards'});
+  anim.onfinish=()=>el.remove();
+}
+function startSpawning(){
+  clearInterval(spawnInterval);
+  spawnInterval=setInterval(()=>{
+    if(!running)return;
+    const c=Math.random()<0.25?2:1;
+    for(let i=0;i<c;i++)spawnHeart();
+  },600);
+}
+function burst(n=12){
+  for(let i=0;i<n;i++)setTimeout(()=>spawnHeart(true),i*45+Math.random()*120);
+}
+toggleBtn.onclick=()=>{running=!running;toggleBtn.textContent=running?'Toggle Hearts':'Hearts Paused';};
+burstBtn.onclick=()=>burst(16);
+coin.onclick=()=>{running=!running;burst(8);};
+coin.setAttribute('tabindex','0');
+coin.onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();coin.click();}};
+startSpawning();
+(function pulse(){
+  const mini=document.querySelectorAll('.mini-hearts path');
+  let t=0;
+  setInterval(()=>{t=(t+1)%60;mini.forEach((p,i)=>{const s=1+0.03*Math.sin((t+i*10)/6);p.style.transform=`scale(${s}) translateY(${(i%2?-1:1)*0.6*Math.sin(t/6)}px)`;});},80);
+})();
+</script>
+</body>
+</html>
