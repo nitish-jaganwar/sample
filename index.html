@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy 26th Birthday, Archana!</title>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fde8f0; --bg2:#f9d3e6; --ink:#3b1252; --soft:#6d4a85;
+  --gold:#f2a100; --rose:#d81b73; --card:rgba(255,255,255,.7); --line:rgba(59,18,82,.2); --cream:#fff6e6;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b0a2b; --bg2:#2d1046; --ink:#fff1d6; --soft:#d9bde8;
+    --gold:#ffb92e; --rose:#ff5fa2; --card:rgba(255,255,255,.08); --line:rgba(255,241,214,.25); --cream:#fff1d6;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b0a2b; --bg2:#2d1046; --ink:#fff1d6; --soft:#d9bde8;
+  --gold:#ffb92e; --rose:#ff5fa2; --card:rgba(255,255,255,.08); --line:rgba(255,241,214,.25); --cream:#fff1d6;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);background:radial-gradient(ellipse at 50% 30%,var(--bg2),var(--bg) 70%) var(--bg);
+  font:300 1.05rem/1.6 'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;overflow-x:hidden}
+button{font:inherit;color:inherit;border:0;padding:0;background:none;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
+main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:40px 22px 90px;text-align:center}
+h1,h2{font-family:'Young Serif',Georgia,'Times New Roman',serif;font-weight:400;margin:0}
+.hint{min-height:3.4em;max-width:22em;margin:0 auto;color:var(--soft);font-size:1.15rem}
+#s1{min-height:calc(100vh - 80px);display:flex;flex-direction:column;justify-content:center;align-items:center}
+#s1 h1{font-size:clamp(2rem,8vw,3rem);margin-bottom:12px}
+#s2{display:none}
+.go #s1{display:none}.go #s2{display:block}
+
+/* gift box */
+.gift{position:relative;width:200px;height:210px;margin:36px 0 10px;-webkit-tap-highlight-color:transparent}
+.gift .box,.gift .lid{position:absolute;left:0;right:0;margin:auto}
+.box{bottom:0;width:164px;height:124px;background:var(--rose);border-radius:8px 8px 12px 12px}
+.lid{bottom:116px;width:190px;height:42px;background:var(--gold);border-radius:8px;z-index:2;transition:transform .8s cubic-bezier(.3,1.5,.5,1),opacity .8s}
+.box::before,.lid::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:26px;margin-left:-13px;background:var(--cream)}
+.lid::after{content:'';position:absolute;left:50%;top:-30px;width:56px;height:34px;margin-left:-28px;border:9px solid var(--cream);border-radius:50% 50% 8px 8px;background:transparent}
+.rays{position:absolute;left:50%;top:40%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;opacity:0;
+  background:repeating-conic-gradient(var(--gold) 0 8deg,transparent 8deg 24deg);animation:spin 5s linear infinite;
+  -webkit-mask:radial-gradient(circle,#000 5%,transparent 70%);mask:radial-gradient(circle,#000 5%,transparent 70%);transition:opacity .4s}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shake{animation:shake .45s}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(calc(var(--s)*-1px)) rotate(calc(var(--s)*-.6deg))}
+  50%{transform:translateX(calc(var(--s)*1px)) rotate(calc(var(--s)*.6deg))}80%{transform:translateX(calc(var(--s)*-.6px))}}
+.open .lid{transform:translateY(-320px) rotate(40deg);opacity:0}
+.open .rays{opacity:.9}
+.open .box{animation:thump .5s}
+@keyframes thump{50%{transform:scale(1.18,.88)}}
+
+/* reveal */
+#name{font-size:clamp(3rem,15vw,5.6rem);line-height:1;color:var(--rose);margin:4px 0 6px;letter-spacing:-.01em}
+.l{display:inline-block;animation:bounce .7s both}
+@keyframes bounce{0%{transform:translateY(80px) scale(.2);opacity:0}65%{transform:translateY(-14px) scale(1.15)}100%{transform:none;opacity:1}}
+#s2 h1{font-size:clamp(1.6rem,7vw,2.4rem)}
+.load{margin:28px auto 0;max-width:22em}
+.bar{height:14px;border:2px solid var(--ink);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--rose);transition:width .15s linear}
+.load p{margin:8px 0 0;font-size:.98rem;color:var(--soft)}
+#cert{display:none;margin:30px auto 0;padding:26px 20px;border:3px double var(--gold);border-radius:6px;background:var(--card)}
+#cert.show{display:block;animation:stamp .6s cubic-bezier(.2,1.6,.4,1)}
+@keyframes stamp{from{transform:scale(2.2) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
+#cert h2{font-size:1.5rem;margin-bottom:10px}
+#cert ul{list-style:none;margin:14px 0;padding:0;text-align:left}
+#cert li{padding:6px 0 6px 30px;position:relative}
+#cert li::before{content:'\2713';position:absolute;left:4px;color:var(--rose);font-weight:600}
+#cert small{display:block;color:var(--soft);margin-top:10px}
+#more{display:none}
+.show-more #more{display:block}
+.sub{margin:42px 0 4px;font-size:1.3rem}
+.sky{position:relative;height:200px;margin:20px 0 36px}
+.bal{position:absolute;bottom:0;width:60px;height:76px;border-radius:50% 50% 47% 47%;background:var(--c);
+  animation:bob 2.6s ease-in-out infinite alternate;animation-delay:var(--d)}
+.bal::after{content:'';position:absolute;left:50%;top:100%;width:2px;height:54px;background:var(--line)}
+@keyframes bob{to{transform:translateY(-22px) rotate(4deg)}}
+.cta{display:inline-block;color:#fff;background:var(--rose);font-weight:600;border-radius:99px;padding:14px 28px;box-shadow:0 8px 22px -8px var(--rose);transition:transform .15s}
+.cta:active{transform:scale(.95)}
+#w{margin:18px auto 20px;min-height:4.5em;max-width:24em;font-size:1.2rem;font-family:'Young Serif',Georgia,serif}
+.pw{animation:pop .4s cubic-bezier(.2,1.6,.4,1)}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:none;opacity:1}}
+footer{margin-top:56px;color:var(--soft)}
+#toast{position:fixed;z-index:10;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,160%);width:min(92vw,420px);
+  padding:14px 18px;border-radius:16px;background:var(--ink);color:var(--bg);font-weight:400;transition:transform .35s cubic-bezier(.2,1.4,.4,1)}
+#toast.on{transform:translate(-50%,0)}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+@media (prefers-reduced-motion:reduce){.shake,.rays,.l,.bal,.open .box,#cert.show,.pw{animation:none}.lid,#toast{transition:none}}
+</style>
+</head>
+<body>
+<canvas id="c" aria-hidden="true"></canvas>
+<div id="toast" role="status"></div>
+<main id="m">
+  <section id="s1">
+    <h1>Archana, a surprise from Nitish just arrived!</h1>
+    <button class="gift" id="gift" aria-label="Gift box. Tap to open">
+      <span class="rays"></span><span class="box"></span><span class="lid"></span>
+    </button>
+    <p class="hint" id="hint">Psst, Archana... tap the box!</p>
+  </section>
+
+  <section id="s2">
+    <h1>Happy 26th Birthday,</h1>
+    <div id="name" aria-label="Archana"></div>
+    <p style="margin:6px 0 0;color:var(--soft)">7 October</p>
+    <div class="load" id="load">
+      <div class="bar"><i id="fill"></i></div>
+      <p id="lt">Calculating Archana's age... 0%</p>
+    </div>
+
+    <div id="cert">
+      <h2>Official Certificate of Awesomeness</h2>
+      <p>This certifies that <b>ARCHANA</b> is hereby declared one year more legendary and officially 26, effective <b>7 October 2026</b>.</p>
+      <ul>
+        <li>Unlimited cake, no questions asked</li>
+        <li>Zero adulting until midnight</li>
+        <li>Permission to be extra dramatic</li>
+        <li>Everyone must say nice things to you, on demand</li>
+      </ul>
+      <small>Signed, The Birthday Committee (Chairperson: the cake)</small>
+    </div>
+
+    <div id="more">
+      <p class="sub">Pop a balloon. Each one has a wish inside.</p>
+      <div class="sky" id="sky"></div>
+      <button class="cta" id="wb">Give me another wish</button>
+      <p id="w">Tap the button. Go on, you deserve it.</p>
+      <div id="note" style="margin:30px auto 0;padding:24px 20px;border-radius:22px;background:var(--card);border:1px solid var(--line);text-align:left">
+        <h2 style="font-size:1.4rem;margin-bottom:10px">A note from Nitish</h2>
+        <p style="margin:0 0 10px">Happy 26th birthday, Archana! Another year, another reason to celebrate you.</p>
+        <p style="margin:0 0 10px">I hope your day is full of cake, laughter and everything that makes you happy. Enjoy every single bit of it, you deserve it.</p>
+        <p style="margin:0;font-family:'Young Serif',Georgia,serif;font-size:1.15rem;color:var(--rose)">With love, Nitish</p>
+      </div>
+      <footer>P.S. The cake is still the real gift.<br><button id="again" style="text-decoration:underline;margin-top:10px">Open the surprise again</button></footer>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var wishes=["May your cake be huge and your diet start tomorrow.","Another year older, zero years wiser, 100% iconic.","You don't age, you level up. New level unlocked!","May your phone battery last as long as your good luck.","Wishing you Wi-Fi that never drops and friends who always reply.","Like good chai, you only get better when you stay strong and hot.","May your biggest worry today be which slice to pick.","May every Monday feel like a Saturday this year.","Smile big. Your camera roll deserves your best angle.","May you find money in old pockets all year long.","You are the main character. The rest of us are extras in your birthday movie.","Today the world owes you cake, compliments and a very long nap."];
+var cols=['#ffb92e','#ff5fa2','#b04fd0','#35c5b0','#ff7a3d','#4da3ff'];
+var ac;function snd(f,d,t){setTimeout(function(){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();
+o.type='triangle';o.frequency.value=f;g.gain.value=.09;o.connect(g);g.connect(ac.destination);o.start();g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+d);o.stop(ac.currentTime+d)}catch(e){}},t||0)}
+function buzz(n){try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}}
+
+var cv=$('c'),cx=cv.getContext('2d'),P=[],raf=0,dpr=devicePixelRatio||1;
+function size(){cv.width=innerWidth*dpr;cv.height=innerHeight*dpr;cx.setTransform(dpr,0,0,dpr,0,0)}size();addEventListener('resize',size);
+function burst(x,y,n){if(reduce)return;for(var i=0;i<n;i++){var a=Math.random()*6.283,s=3+Math.random()*10;
+P.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-5,w:6+Math.random()*6,h:4+Math.random()*5,r:0,vr:(Math.random()-.5)*.5,c:cols[i%6],l:1})}
+if(!raf)raf=requestAnimationFrame(tick)}
+function tick(){cx.clearRect(0,0,innerWidth,innerHeight);P=P.filter(function(p){return p.l>0&&p.y<innerHeight+20});
+P.forEach(function(p){p.vy+=.24;p.vx*=.992;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.l-=.006;cx.save();cx.globalAlpha=Math.max(p.l,0);
+cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore()});raf=P.length?requestAnimationFrame(tick):0}
+
+var tt;function toast(t){var e=$('toast');e.textContent=t;e.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){e.classList.remove('on')},2800)}
+
+var hints=["Psst, Archana... tap the box!","It rattles! Is it jewellery? A pony? Tap again.","Careful, it's fragile. Like everyone's patience before cake. One more tap!","Okay, okay... opening!"];
+var taps=0,gift=$('gift'),busy=false;
+gift.addEventListener('click',function(){
+  if(busy)return;taps++;buzz(40);snd(300+taps*120,.15);
+  gift.classList.remove('shake');void gift.offsetWidth;gift.style.setProperty('--s',taps*5);gift.classList.add('shake');
+  $('hint').textContent=hints[Math.min(taps,3)];
+  if(taps>=3){busy=true;setTimeout(openIt,650)}
+});
+function openIt(){
+  gift.classList.add('open');buzz([80,40,160]);[523,659,784,1047].forEach(function(f,i){snd(f,.35,i*110)});
+  var r=gift.getBoundingClientRect();burst(r.left+r.width/2,r.top+40,160);
+  setTimeout(function(){burst(innerWidth/2,innerHeight*.35,140)},500);
+  setTimeout(function(){m.classList.add('go');scrollTo(0,0);reveal()},1300);
+}
+var m=$('m');
+function reveal(){
+  var n=$('name');n.textContent='';"Archana".split('').forEach(function(ch,i){var s=document.createElement('span');s.className='l';s.textContent=ch;s.style.animationDelay=(i*.09)+'s';n.appendChild(s)});
+  burst(innerWidth/2,innerHeight*.25,120);
+  var p=0,f=$('fill'),t=$('lt');
+  var iv=setInterval(function(){p+=Math.random()*9+3;if(p>=99){p=99;clearInterval(iv);
+    t.textContent="Result: 26?! Error. Nobody this fabulous can be 26.";f.style.background='var(--gold)';f.style.width='100%';buzz(100);
+    setTimeout(function(){
+      $('load').style.display='none';$('cert').classList.add('show');snd(660,.2);snd(880,.4,150);burst(innerWidth/2,innerHeight*.4,100);
+      setTimeout(function(){m.classList.add('show-more');mkBal()},900)},1400);return}
+    f.style.width=p+'%';t.textContent="Calculating Archana's age... "+Math.floor(p)+"%"},170);
+}
+var left=0;
+function mkBal(){var s=$('sky');s.textContent='';left=7;
+  for(var i=0;i<7;i++){var b=document.createElement('button');b.className='bal';b.setAttribute('aria-label','Balloon with a wish');
+    b.style.left=(i*13.6+1)+'%';b.style.setProperty('--c',cols[i%6]);b.style.setProperty('--d',(i*.3)+'s');b.style.marginTop=(i%2?24:0)+'px';
+    b.addEventListener('click',pop);s.appendChild(b)}}
+function pop(e){var b=e.currentTarget,r=b.getBoundingClientRect();burst(r.left+30,r.top+38,45);snd(180,.12);buzz(30);
+  b.remove();left--;
+  if(left===0){toast("All popped! One big virtual hug incoming. \uD83E\uDD17");burst(innerWidth/2,innerHeight*.5,200);snd(784,.4)}
+  else toast(wishes[Math.floor(Math.random()*wishes.length)])}
+var wi=-1;
+$('wb').addEventListener('click',function(){var n;do{n=Math.floor(Math.random()*wishes.length)}while(n===wi);wi=n;
+  var w=$('w');w.textContent=wishes[n];w.classList.remove('pw');void w.offsetWidth;w.classList.add('pw');snd(500+n*30,.15);burst(innerWidth/2,innerHeight*.7,30)});
+$('again').addEventListener('click',function(){location.reload()});
+})();
+</script>
+</body>
+</html>
